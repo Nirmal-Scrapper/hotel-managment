@@ -1,13 +1,48 @@
-const mongoose = require('mongoose');
+const { DataTypes } = require('sequelize');
+const { sequelize } = require('../config/db');
 
-const roomSchema = new mongoose.Schema({
-  room_no: String,
-  room_type: String,
-  room_size: String,
-  price: Number,
-  is_available_from: Date,
-  is_available_to: Date,
-  hotel_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Hotel' }
-});
+const Room = sequelize.define(
+  'Room',
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    room_no: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    room_type: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    room_size: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    price: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false,
+    },
+    is_available_from: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    is_available_to: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    hotel_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+  },
+  {
+    tableName: 'rooms',
+    timestamps: false,
+  }
+);
 
-module.exports = mongoose.model('Room', roomSchema);
+module.exports = Room;
+
